@@ -18,17 +18,18 @@ open Suave.Log
 [<EntryPoint>]
 let main argv = 
     let basic_auth : WebPart =
-        Authentication.authenticate_basic ( fun (user_name,password) -> user_name.Equals("Sebastian Fialka") && password.Equals("Lufthansa#2014"))
+        Authentication.authenticate_basic ( fun (user_name,password) -> user_name.Equals("Testuser") && password.Equals("secret#password1"))
+    let readContent (path: string) =
+        System.IO.File.ReadAllText(path)
     choose [
-            GET >>= url "/public" >>= OK "Hello Anonymous"
-            GET >>= browse
-            GET >>= dir
+            GET >>= url "/" >>= OK (readContent "Home Page.html")
+            GET >>= url "/hello" >>= OK "Hello from public space"
             basic_auth
-            GET >>= url "/protected" >>= context (fun x -> OK (sprintf "Hello %d"  x.user_state.Count))
+            GET >>= url "/protected" >>= context (fun x -> OK "Hello from secret space")
             ]
             |> web_server 
                 {
-                    bindings = [HttpBinding.Create(HTTP, "0.0.0.0", 8080)];
+                    bindings = [HttpBinding.Create(HTTP, "0.0.0.0", 8080)]; //necessary to have public access from outside the container
                     error_handler = default_error_handler;
                     listen_timeout = System.TimeSpan.FromSeconds(5.);
                     ct = Async.DefaultCancellationToken;
