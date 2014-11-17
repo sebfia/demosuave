@@ -37,7 +37,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="suave">
-      <HintPath>..\packages\Suave.0.17.0\lib\suave.dll</HintPath>
+      <HintPath>..\packages\Suave.0.18.0\lib\suave.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -46,9 +46,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.1\Framework\v4.0\Microsoft.FSharp.Targets" />
   <ItemGroup>
-    <None Include="packages.config" />
     <None Include="Home Page.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>
